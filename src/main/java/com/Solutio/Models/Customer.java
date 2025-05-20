@@ -19,6 +19,15 @@ public class Customer {
     private String phone;
     private String address;
     private LocalDate registrationDate;
+    private LocalDate updateDate;
+
+    public LocalDate getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(LocalDate updateDate) {
+        this.updateDate = updateDate;
+    }
 
     public UUID getId() {
         return id;
