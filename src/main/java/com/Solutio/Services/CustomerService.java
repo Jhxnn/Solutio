@@ -5,7 +5,9 @@ import com.Solutio.Models.Customer;
 import com.Solutio.Repositories.CustomerRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,9 +28,15 @@ public class CustomerService {
     }
 
     public Customer createCustomer(CustomerDto customerDto){
+        if(customerRepository.existByEmail(customerDto.email())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already in use");
+        }
+        if(customerRepository.existByCpfCnpj(customerDto.cpfCnpj())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "CPF or CNPJ already in use");
+        }
         Customer customer = new Customer();
-        BeanUtils.copyProperties(customerDto,customer);
         customer.setRegistrationDate(LocalDate.now());
+        BeanUtils.copyProperties(customerDto,customer);
         customerRepository.save(customer);
         return customer;
     }
