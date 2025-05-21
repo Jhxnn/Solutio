@@ -77,6 +77,15 @@ public class ChargeService {
         return chargeRepository.save(charge);
     }
 
+    public List<Charge> findByUser(UUID id){
+       Customer customer =  customerService.findById(id);
+       return chargeRepository.findByCustomer(customer);
+    }
+
+    public List<Charge> findByStatus(ChargeStatus chargeStatus){
+        return chargeRepository.findByStatus(chargeStatus);
+    }
+
     public void deleteCharge(UUID id){
         Charge charge = findById(id);
         chargeRepository.delete(charge);
