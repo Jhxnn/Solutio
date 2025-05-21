@@ -3,10 +3,13 @@ package com.Solutio.Services;
 import com.Solutio.Dtos.ChargeDto;
 import com.Solutio.Models.Charge;
 import com.Solutio.Models.Customer;
+import com.Solutio.Models.Enums.ChargeStatus;
 import com.Solutio.Repositories.ChargeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,6 +39,7 @@ public class ChargeService {
         BeanUtils.copyProperties(chargeDto, charge);
         charge.setCustomer(customer);
         charge.setCreatedAt(LocalDateTime.now());
+        charge.setStatus(ChargeStatus.PENDING);
         return chargeRepository.save(charge);
     }
 
@@ -57,6 +61,18 @@ public class ChargeService {
         if(chargeDto.description() != null){
             charge.setDescription(chargeDto.description());
         }
+        charge.setUpdateAt(LocalDateTime.now());
+
+        return chargeRepository.save(charge);
+    }
+
+    public Charge payCharge(UUID id){
+        Charge charge = findById(id);
+        if(charge.getDueDate().isAfter(LocalDate.now())){
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "This charge is unavailable");
+        }
+        charge.setStatus(ChargeStatus.PAID);
+        charge.setPaidAt(LocalDateTime.now());
         charge.setUpdateAt(LocalDateTime.now());
         return chargeRepository.save(charge);
     }
