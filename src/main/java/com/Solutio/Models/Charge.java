@@ -27,9 +27,17 @@ public class Charge {
     @Enumerated(EnumType.STRING)
     private ChargeStatus status;
 
-    private LocalDateTime createdAt;
     private LocalDateTime paidAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updateAt;
 
+    public LocalDateTime getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(LocalDateTime updateAt) {
+        this.updateAt = updateAt;
+    }
 
     public UUID getId() {
         return id;

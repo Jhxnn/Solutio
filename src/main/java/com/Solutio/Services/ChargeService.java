@@ -38,4 +38,31 @@ public class ChargeService {
         charge.setCreatedAt(LocalDateTime.now());
         return chargeRepository.save(charge);
     }
+
+    public Charge updateCharge(ChargeDto chargeDto, UUID id){
+        Charge charge = findById(id);
+        if(chargeDto.customer() != null){
+            Customer customer = customerService.findById(chargeDto.customer());
+            charge.setCustomer(customer);
+        }
+        if(chargeDto.amount() != null){
+            charge.setAmount(chargeDto.amount());
+        }
+        if(chargeDto.chargeType() != null){
+            charge.setType(chargeDto.chargeType());
+        }
+        if(chargeDto.chargeType() != null){
+            charge.setDueDate(chargeDto.dueDate());
+        }
+        if(chargeDto.description() != null){
+            charge.setDescription(chargeDto.description());
+        }
+        charge.setUpdateAt(LocalDateTime.now());
+        return chargeRepository.save(charge);
+    }
+
+    public void deleteCharge(UUID id){
+        Charge charge = findById(id);
+        chargeRepository.delete(charge);
+    }
 }
