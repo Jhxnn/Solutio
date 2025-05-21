@@ -4,6 +4,7 @@ import com.Solutio.Dtos.ChargeDto;
 import com.Solutio.Models.Charge;
 import com.Solutio.Models.Customer;
 import com.Solutio.Models.Enums.ChargeStatus;
+import com.Solutio.Models.Enums.ChargeType;
 import com.Solutio.Repositories.ChargeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,12 @@ public class ChargeService {
         Customer customer = customerService.findById(chargeDto.customer());
         Charge charge = new Charge();
         BeanUtils.copyProperties(chargeDto, charge);
+        if(charge.getType() == ChargeType.PIX){
+
+        }
+        if(charge.getType() == ChargeType.BOLETO){
+
+        }
         charge.setCustomer(customer);
         charge.setCreatedAt(LocalDateTime.now());
         charge.setStatus(ChargeStatus.PENDING);
@@ -77,7 +84,7 @@ public class ChargeService {
         return chargeRepository.save(charge);
     }
 
-    public List<Charge> findByUser(UUID id){
+    public List<Charge> findByCustomer(UUID id){
        Customer customer =  customerService.findById(id);
        return chargeRepository.findByCustomer(customer);
     }
