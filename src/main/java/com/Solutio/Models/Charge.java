@@ -20,16 +20,16 @@ public class Charge {
     private Customer customer;
 
     private BigDecimal amount;
+    @Enumerated(EnumType.STRING)
+    private ChargeType type;
     private String description;
     private LocalDate dueDate;
-    private LocalDateTime createdAt;
-    private LocalDateTime paidAt;
-
     @Enumerated(EnumType.STRING)
     private ChargeStatus status;
 
-    @Enumerated(EnumType.STRING)
-    private ChargeType type;
+    private LocalDateTime createdAt;
+    private LocalDateTime paidAt;
+
 
     public UUID getId() {
         return id;

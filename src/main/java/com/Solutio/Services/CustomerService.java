@@ -62,4 +62,9 @@ public class CustomerService {
 
         return customerRepository.save(customer);
     }
+
+    public void deleteCustomer(UUID id){
+        Customer customer = findById(id);
+        customerRepository.delete(customer);
+    }
 }
