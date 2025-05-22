@@ -3,14 +3,19 @@ package com.Solutio.Services;
 import com.Solutio.Dtos.CustomerDto;
 import com.Solutio.Models.Customer;
 import com.Solutio.Repositories.CustomerRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -18,6 +23,10 @@ public class CustomerService {
 
     @Autowired
     CustomerRepository customerRepository;
+
+    @Value("${asaas.api.token}")
+    private String asaasApiKey;
+
 
     public Customer findById(UUID id){
         return customerRepository.findById(id).orElseThrow(()-> new RuntimeException("Cannot be found"));
@@ -27,19 +36,36 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public Customer createCustomer(CustomerDto customerDto){
-        if(customerRepository.existByEmail(customerDto.email())){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already in use");
-        }
-        if(customerRepository.existByCpfCnpj(customerDto.cpfCnpj())){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "CPF or CNPJ already in use");
-        }
+    public Customer createCustomer(CustomerDto customerDto) {
         Customer customer = new Customer();
-        customer.setRegistrationDate(LocalDate.now());
         BeanUtils.copyProperties(customerDto,customer);
-        customerRepository.save(customer);
-        return customer;
+        customer.setRegistrationDate(LocalDate.now());
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("access_token", asaasApiKey);
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("name", customer.getName());
+        payload.put("cpfCnpj", customer.getCpfCnpj());
+        payload.put("email", customer.getEmail());
+        payload.put("phone", customer.getPhone());
+
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(payload, headers);
+
+        ResponseEntity<JsonNode> response = restTemplate.postForEntity(
+                "https://www.asaas.com/api/v3/customers",
+                request,
+                JsonNode.class
+        );
+
+        String externalId = response.getBody().get("id").asText();
+        customer.setExternalId(externalId);
+
+        return customerRepository.save(customer);
+
     }
+
 
     public Customer updateCustomer(CustomerDto customerDto, UUID id){
         Customer customer = findById(id);

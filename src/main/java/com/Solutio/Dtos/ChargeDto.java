@@ -14,5 +14,6 @@ public record ChargeDto(
         BigDecimal amount,
         String description,
         ChargeType chargeType,
+
         LocalDate dueDate) {
 }

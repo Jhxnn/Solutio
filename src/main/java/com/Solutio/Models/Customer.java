@@ -18,6 +18,7 @@ public class Customer {
     private String cpfCnpj;
     private String phone;
     private String address;
+    private String externalId;
     private LocalDate registrationDate;
     private LocalDate updateDate;
 
@@ -31,6 +32,14 @@ public class Customer {
 
     public UUID getId() {
         return id;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
     public void setId(UUID id) {

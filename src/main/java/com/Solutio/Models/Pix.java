@@ -15,9 +15,28 @@ public class Pix {
     private Charge charge;
 
     private String qrCode;
-    private String pixKey;
-    private String txid;
+    private String externalId;
+
+    private String invoiceUrl;
+
     private String qrCodeUrl;
+
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
+    public String getInvoiceUrl() {
+        return invoiceUrl;
+    }
+
+    public void setInvoiceUrl(String invoiceUrl) {
+        this.invoiceUrl = invoiceUrl;
+    }
 
     public UUID getId() {
         return id;
@@ -43,13 +62,7 @@ public class Pix {
         this.qrCode = qrCode;
     }
 
-    public String getPixKey() {
-        return pixKey;
-    }
 
-    public void setPixKey(String pixKey) {
-        this.pixKey = pixKey;
-    }
 
     public String getTxid() {
         return txid;

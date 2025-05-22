@@ -42,7 +42,7 @@ public class ChargeService {
         Charge charge = new Charge();
         BeanUtils.copyProperties(chargeDto, charge);
         if(charge.getType() == ChargeType.PIX){
-
+            pixService.createPixCharge(customer,charge);
         }
         if(charge.getType() == ChargeType.BOLETO){
 
