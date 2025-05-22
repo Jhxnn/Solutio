@@ -27,8 +27,5 @@ public class WebhookService {
             case "CANCELLED" -> chargeService.updateChargeStatus(ChargeStatus.CANCELED, charge);
             case "EXPIRED" -> chargeService.updateChargeStatus(ChargeStatus.OVERDUE, charge);
             default -> System.out.println("Evento não tratado.");
-        }
-
-        chargeRepository.save(charge);
-    }
+        }}
 }
