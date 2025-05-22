@@ -1,4 +1,4 @@
 package com.Solutio.Dtos;
 
-public record WebhookDto() {
+public record WebhookDto(String event, PaymentData paymentData) {
 }

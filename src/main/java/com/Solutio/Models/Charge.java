@@ -19,6 +19,8 @@ public class Charge {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    private String externalId;
+
     private BigDecimal amount;
     @Enumerated(EnumType.STRING)
     private ChargeType type;
@@ -109,5 +111,13 @@ public class Charge {
 
     public void setType(ChargeType type) {
         this.type = type;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 }

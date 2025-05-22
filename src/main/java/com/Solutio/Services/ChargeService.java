@@ -26,6 +26,9 @@ public class ChargeService {
     @Autowired
     ChargeRepository chargeRepository;
 
+    @Autowired
+    PixService pixService;
+
 
     public Charge findById(UUID id){
         return chargeRepository.findById(id).orElseThrow(()-> new RuntimeException("Cannot be found"));
@@ -73,16 +76,19 @@ public class ChargeService {
         return chargeRepository.save(charge);
     }
 
-    public Charge payCharge(UUID id){
-        Charge charge = findById(id);
-        if(charge.getDueDate().isAfter(LocalDate.now())){
-            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "This charge is unavailable");
+    public Charge updateChargeStatus(ChargeStatus status, Charge charge){
+        if(status == ChargeStatus.PAID){
+            if(charge.getDueDate().isBefore(LocalDate.now())){
+                throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "This charge is unavailable");
+            }
+            charge.setPaidAt(LocalDateTime.now());
+
         }
-        charge.setStatus(ChargeStatus.PAID);
-        charge.setPaidAt(LocalDateTime.now());
+        charge.setStatus(status);
         charge.setUpdateAt(LocalDateTime.now());
         return chargeRepository.save(charge);
     }
+
 
     public List<Charge> findByCustomer(UUID id){
        Customer customer =  customerService.findById(id);

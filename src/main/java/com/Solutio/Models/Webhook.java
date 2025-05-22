@@ -17,6 +17,7 @@ public class Webhook {
     private String payload;
 
     private LocalDateTime receivedAt;
+
     private boolean processed;
 
     public UUID getId() {

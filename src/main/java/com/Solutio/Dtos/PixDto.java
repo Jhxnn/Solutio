@@ -1,4 +1,4 @@
 package com.Solutio.Dtos;
 
-public record PixDto() {
+public record PixDto(String qrCode, String pixKey, String txid, String qrCodeUrl) {
 }

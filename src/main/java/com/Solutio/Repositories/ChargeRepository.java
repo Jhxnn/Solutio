@@ -13,4 +13,6 @@ public interface ChargeRepository extends JpaRepository<Charge, UUID> {
     List<Charge> findByCustomer(Customer customer);
 
     List<Charge> findByStatus(ChargeStatus chargeStatus);
+
+    Charge findByExternalId(String externalId);
 }
