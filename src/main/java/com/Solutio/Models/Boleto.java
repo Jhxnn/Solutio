@@ -15,11 +15,9 @@ public class Boleto {
     private Charge charge;
 
     private String externalId;
-
     private String invoiceUrl;
     private String barcode;
 
-    private
 
     public UUID getId() {
         return id;
