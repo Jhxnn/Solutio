@@ -64,13 +64,6 @@ public class Pix {
 
 
 
-    public String getTxid() {
-        return txid;
-    }
-
-    public void setTxid(String txid) {
-        this.txid = txid;
-    }
 
     public String getQrCodeUrl() {
         return qrCodeUrl;

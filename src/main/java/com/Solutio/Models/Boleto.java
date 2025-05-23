@@ -14,10 +14,12 @@ public class Boleto {
     @JoinColumn(name = "charge_id")
     private Charge charge;
 
+    private String externalId;
+
+    private String invoiceUrl;
     private String barcode;
-    private String digitableLine;
-    private String boletoUrl;
-    private String ourNumber;
+
+    private
 
     public UUID getId() {
         return id;
@@ -43,27 +45,19 @@ public class Boleto {
         this.barcode = barcode;
     }
 
-    public String getDigitableLine() {
-        return digitableLine;
+    public String getExternalId() {
+        return externalId;
     }
 
-    public void setDigitableLine(String digitableLine) {
-        this.digitableLine = digitableLine;
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
-    public String getBoletoUrl() {
-        return boletoUrl;
+    public String getInvoiceUrl() {
+        return invoiceUrl;
     }
 
-    public void setBoletoUrl(String boletoUrl) {
-        this.boletoUrl = boletoUrl;
-    }
-
-    public String getOurNumber() {
-        return ourNumber;
-    }
-
-    public void setOurNumber(String ourNumber) {
-        this.ourNumber = ourNumber;
+    public void setInvoiceUrl(String invoiceUrl) {
+        this.invoiceUrl = invoiceUrl;
     }
 }
