@@ -24,6 +24,9 @@ public class ChargeService {
     CustomerService customerService;
 
     @Autowired
+    PaymentTransactionService paymentTransactionService;
+
+    @Autowired
     ChargeRepository chargeRepository;
 
     @Autowired
@@ -87,8 +90,10 @@ public class ChargeService {
             charge.setPaidAt(LocalDateTime.now());
 
         }
+
         charge.setStatus(status);
         charge.setUpdateAt(LocalDateTime.now());
+        paymentTransactionService.createPaymentTransaction(charge);
         return chargeRepository.save(charge);
     }
 

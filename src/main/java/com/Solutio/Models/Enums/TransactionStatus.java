@@ -1,5 +1,8 @@
 package com.Solutio.Models.Enums;
 
 public enum TransactionStatus {
-    CREATED, SUCCESS, FAILED
+    PENDING,
+    PAID,
+    FAILED,
+    CANCELED
 }

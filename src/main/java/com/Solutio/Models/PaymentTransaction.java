@@ -24,8 +24,8 @@ public class PaymentTransaction {
     private TransactionStatus status;
 
     private LocalDateTime createdAt;
-    private LocalDateTime confirmedAt;
-    private String externalReference;
+    private LocalDateTime paymentDate;
+    private String externalId;
 
     public UUID getId() {
         return id;
@@ -67,19 +67,22 @@ public class PaymentTransaction {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getConfirmedAt() {
-        return confirmedAt;
+    public LocalDateTime getPaymentDate() {
+        return paymentDate;
     }
 
-    public void setConfirmedAt(LocalDateTime confirmedAt) {
-        this.confirmedAt = confirmedAt;
+    public void setPaymentDate(LocalDateTime paymentDate) {
+        this.paymentDate = paymentDate;
     }
 
-    public String getExternalReference() {
-        return externalReference;
+    public String getExternalId() {
+        return externalId;
     }
 
-    public void setExternalReference(String externalReference) {
-        this.externalReference = externalReference;
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
+
+
+
 }

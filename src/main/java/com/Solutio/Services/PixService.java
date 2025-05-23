@@ -1,13 +1,11 @@
 package com.Solutio.Services;
 
 
-import com.Solutio.Dtos.PixDto;
 import com.Solutio.Models.Charge;
 import com.Solutio.Models.Customer;
 import com.Solutio.Models.Pix;
 import com.Solutio.Repositories.PixRepository;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
