@@ -59,7 +59,6 @@ public class PixService {
         JsonNode body = response.getBody();
 
         pix.setCharge(charge);
-        pix.setTxid(body.get("id").asText());
         pix.setQrCode(body.get("pixQrCode").asText());
         pix.setQrCodeUrl(body.get("pixQrCodeImage").asText());
         pix.setExternalId(body.get("id").asText());
