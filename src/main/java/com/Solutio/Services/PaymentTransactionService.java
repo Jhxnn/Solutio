@@ -16,6 +16,9 @@ public class PaymentTransactionService {
     @Autowired
     PaymentTransactionRepository paymentTransactionRepository;
 
+    @Autowired
+    EmailService emailService;
+
     public void createPaymentTransaction(Charge charge){
         PaymentTransaction paymentTransaction = new PaymentTransaction();
         paymentTransaction.setCreatedAt(LocalDateTime.now());

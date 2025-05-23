@@ -84,13 +84,12 @@ public class ChargeService {
 
     public Charge updateChargeStatus(ChargeStatus status, Charge charge){
         if(status == ChargeStatus.PAID){
-            if(charge.getDueDate().isBefore(LocalDate.now())){
-                throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "This charge is unavailable");
+            if (charge.getStatus() == ChargeStatus.PAID) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This charge is already paid.");
             }
+
             charge.setPaidAt(LocalDateTime.now());
-
         }
-
         charge.setStatus(status);
         charge.setUpdateAt(LocalDateTime.now());
         paymentTransactionService.createPaymentTransaction(charge);
