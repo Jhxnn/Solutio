@@ -31,7 +31,7 @@ public class PixService {
     @Value("${asaas.api.token}")
     private String asaasApikey;
 
-    public Pix createPixCharge(Customer customer,Charge charge){
+    public void createPixCharge(Customer customer,Charge charge){
 
         Pix pix = new Pix();
         RestTemplate restTemplate = new RestTemplate();
@@ -64,6 +64,6 @@ public class PixService {
         pix.setExternalId(body.get("id").asText());
         pix.setInvoiceUrl(body.get("invoiceUrl").asText());
 
-        return pixRepository.save(pix);
+        pixRepository.save(pix);
     }
 }

@@ -27,7 +27,7 @@ public class BoletoService {
     @Value("${asaas.api.token}")
     private String asaasApikey;
 
-    public Boleto createBoletoCharge(Customer customer, Charge charge) {
+    public void createBoletoCharge(Customer customer, Charge charge) {
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -59,7 +59,7 @@ public class BoletoService {
         boleto.setInvoiceUrl(body.get("invoiceUrl").asText());
         boleto.setBarcode(body.get("bankSlipUrl").asText());
 
-        return boletoRepository.save(boleto);
+        boletoRepository.save(boleto);
     }
 
 }

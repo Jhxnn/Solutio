@@ -29,6 +29,9 @@ public class ChargeService {
     @Autowired
     PixService pixService;
 
+    @Autowired
+    BoletoService boletoService;
+
 
     public Charge findById(UUID id){
         return chargeRepository.findById(id).orElseThrow(()-> new RuntimeException("Cannot be found"));
@@ -45,7 +48,7 @@ public class ChargeService {
             pixService.createPixCharge(customer,charge);
         }
         if(charge.getType() == ChargeType.BOLETO){
-
+            boletoService.createBoletoCharge(customer, charge);
         }
         charge.setCustomer(customer);
         charge.setCreatedAt(LocalDateTime.now());
