@@ -11,7 +11,8 @@ public interface CustomerRepository extends JpaRepository<Customer, UUID> {
 
     Customer findByCpfCnpj(String cpfCnpj);
 
-    boolean existByEmail(String email);
+    boolean existsByEmail(String email);
 
-    boolean existByCpfCnpj(String cpfCnpj);
+    boolean existsByCpfCnpj(String cpfCnpj);
+
 }

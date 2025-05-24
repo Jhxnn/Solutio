@@ -32,6 +32,10 @@ public class CustomerService {
         return customerRepository.findById(id).orElseThrow(()-> new RuntimeException("Cannot be found"));
     }
 
+    public Customer findByEmail(String email){
+        return customerRepository.findByEmail(email);
+    }
+
     public List<Customer> findAll(){
         return customerRepository.findAll();
     }
