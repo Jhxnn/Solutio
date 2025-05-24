@@ -36,6 +36,10 @@ public class CustomerService {
         return customerRepository.findByEmail(email);
     }
 
+    public Customer findByCpfCnpj(String cpfCnpj){
+        return customerRepository.findByCpfCnpj(cpfCnpj);
+    }
+
     public List<Customer> findAll(){
         return customerRepository.findAll();
     }
