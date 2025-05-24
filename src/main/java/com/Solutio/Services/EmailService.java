@@ -16,7 +16,7 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String remetende;
 
-    public String enviarEmailTexto(String destinatario, String assunto, String mensagem) {
+    public String sendTextEmail(String destinatario, String assunto, String mensagem) {
 
         try {
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -25,10 +25,10 @@ public class EmailService {
             simpleMailMessage.setSubject(assunto);
             simpleMailMessage.setText(mensagem);
             javaMailSender.send(simpleMailMessage);
-            return "Email enviado";
+            return "Email sent";
         }
         catch(Exception e) {
-            return "Erro ao enviar Email: " + e.getLocalizedMessage();
+            return "Failed to send email: " + e.getLocalizedMessage();
         }
     }
 
