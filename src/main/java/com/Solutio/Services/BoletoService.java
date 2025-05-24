@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -60,6 +61,10 @@ public class BoletoService {
         boleto.setBarcode(body.get("bankSlipUrl").asText());
 
         boletoRepository.save(boleto);
+    }
+
+    public List<Boleto> findAll(){
+        return boletoRepository.findAll();
     }
 
 }
