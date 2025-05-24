@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class PaymentTransactionService {
@@ -19,6 +20,9 @@ public class PaymentTransactionService {
     @Autowired
     EmailService emailService;
 
+    public List<PaymentTransaction> findAll(){
+        return paymentTransactionRepository.findAll();
+    }
     public void createPaymentTransaction(Charge charge){
         PaymentTransaction paymentTransaction = new PaymentTransaction();
         paymentTransaction.setCreatedAt(LocalDateTime.now());
