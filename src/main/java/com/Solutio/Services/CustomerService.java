@@ -62,7 +62,7 @@ public class CustomerService {
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(payload, headers);
 
         ResponseEntity<JsonNode> response = restTemplate.postForEntity(
-                "https://www.asaas.com/api/v3/customers",
+                "https://sandbox.asaas.com/api/v3/customers",
                 request,
                 JsonNode.class
         );

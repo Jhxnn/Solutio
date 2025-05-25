@@ -47,7 +47,7 @@ public class BoletoService {
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(payload, headers);
 
         ResponseEntity<JsonNode> response = restTemplate.postForEntity(
-                "https://www.asaas.com/api/v3/payments",
+                "https://sandbox.asaas.com/api/v3/payments",
                 request,
                 JsonNode.class
         );
