@@ -30,7 +30,7 @@ public class PixService {
     @Value("${asaas.api.token}")
     private String asaasApikey;
 
-    public void createPixCharge(Customer customer,Charge charge){
+    public Pix createPixCharge(Customer customer,Charge charge){
 
         Pix pix = new Pix();
         RestTemplate restTemplate = new RestTemplate();
@@ -43,7 +43,7 @@ public class PixService {
         payload.put("customer", customer.getExternalId());
         payload.put("billingType", "PIX");
         payload.put("value", charge.getAmount());
-        payload.put("dueDate", charge.getDueDate());
+        payload.put("dueDate", charge.getDueDate().toString());
         payload.put("description", "Pagamento serviço");
         payload.put("externalReference", "CHG_" + UUID.randomUUID());
 
@@ -58,12 +58,12 @@ public class PixService {
         JsonNode body = response.getBody();
 
         pix.setCharge(charge);
-        pix.setQrCode(body.get("pixQrCode").asText());
-        pix.setQrCodeUrl(body.get("pixQrCodeImage").asText());
-        pix.setExternalId(body.get("id").asText());
-        pix.setInvoiceUrl(body.get("invoiceUrl").asText());
+        pix.setQrCode(body.has("pixQrCode") ? body.get("pixQrCode").asText() : null);
+        pix.setQrCodeUrl(body.has("pixQrCodeImage") ? body.get("pixQrCodeImage").asText() : null);
+        pix.setExternalId(body.has("id") ? body.get("id").asText() : null);
+        pix.setInvoiceUrl(body.has("invoiceUrl") ? body.get("invoiceUrl").asText() : null);
 
-        pixRepository.save(pix);
+        return pixRepository.save(pix);
     }
 
     public List<Pix> findAll(){

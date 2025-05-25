@@ -1,10 +1,12 @@
 package com.Solutio.Services;
 
 import com.Solutio.Dtos.ChargeDto;
+import com.Solutio.Models.Boleto;
 import com.Solutio.Models.Charge;
 import com.Solutio.Models.Customer;
 import com.Solutio.Models.Enums.ChargeStatus;
 import com.Solutio.Models.Enums.ChargeType;
+import com.Solutio.Models.Pix;
 import com.Solutio.Repositories.ChargeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,16 +49,23 @@ public class ChargeService {
         Customer customer = customerService.findById(chargeDto.customer());
         Charge charge = new Charge();
         BeanUtils.copyProperties(chargeDto, charge);
-        if(charge.getType() == ChargeType.PIX){
-            pixService.createPixCharge(customer,charge);
-        }
-        if(charge.getType() == ChargeType.BOLETO){
-            boletoService.createBoletoCharge(customer, charge);
-        }
         charge.setCustomer(customer);
         charge.setCreatedAt(LocalDateTime.now());
         charge.setStatus(ChargeStatus.PENDING);
-        return chargeRepository.save(charge);
+        chargeRepository.save(charge);
+        if(charge.getType() == ChargeType.PIX){
+            Pix pix = pixService.createPixCharge(customer,charge);
+            charge.setExternalId(pix.getExternalId());
+            chargeRepository.save(charge);
+        }
+        if(charge.getType() == ChargeType.BOLETO){
+            Boleto boleto = boletoService.createBoletoCharge(customer, charge);
+            charge.setExternalId(boleto.getExternalId());
+            chargeRepository.save(charge);
+        }
+
+        return charge;
+
     }
 
     public Charge updateCharge(ChargeDto chargeDto, UUID id){
@@ -68,10 +77,10 @@ public class ChargeService {
         if(chargeDto.amount() != null){
             charge.setAmount(chargeDto.amount());
         }
-        if(chargeDto.chargeType() != null){
-            charge.setType(chargeDto.chargeType());
+        if(chargeDto.type() != null){
+            charge.setType(chargeDto.type());
         }
-        if(chargeDto.chargeType() != null){
+        if(chargeDto.type() != null){
             charge.setDueDate(chargeDto.dueDate());
         }
         if(chargeDto.description() != null){

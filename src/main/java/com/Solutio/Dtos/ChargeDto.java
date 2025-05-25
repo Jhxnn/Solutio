@@ -13,6 +13,6 @@ public record ChargeDto(
         UUID customer,
         BigDecimal amount,
         String description,
-        ChargeType chargeType,
+        ChargeType type,
         LocalDate dueDate) {
 }
