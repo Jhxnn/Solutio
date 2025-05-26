@@ -15,6 +15,7 @@ public class Pix {
     private Charge charge;
 
     private String qrCode;
+
     private String externalId;
 
     private String invoiceUrl;

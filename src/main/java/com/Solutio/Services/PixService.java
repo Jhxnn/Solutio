@@ -8,10 +8,7 @@ import com.Solutio.Repositories.PixRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -58,13 +55,12 @@ public class PixService {
         JsonNode body = response.getBody();
 
         pix.setCharge(charge);
-        pix.setQrCode(body.has("pixQrCode") ? body.get("pixQrCode").asText() : null);
-        pix.setQrCodeUrl(body.has("pixQrCodeImage") ? body.get("pixQrCodeImage").asText() : null);
         pix.setExternalId(body.has("id") ? body.get("id").asText() : null);
         pix.setInvoiceUrl(body.has("invoiceUrl") ? body.get("invoiceUrl").asText() : null);
-
+        System.out.println(body);
         return pixRepository.save(pix);
     }
+
 
     public List<Pix> findAll(){
         return pixRepository.findAll();

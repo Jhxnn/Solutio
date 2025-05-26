@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
@@ -18,6 +20,11 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@RequestBody CustomerDto customerDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(customerService.createCustomer(customerDto));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Customer>> findAll(){
+        return ResponseEntity.status(HttpStatus.OK).body(customerService.findAll());
     }
 
     @GetMapping("/email/{email}")

@@ -24,4 +24,5 @@ public class PixController {
     public ResponseEntity<List<Pix>> findALl(){
         return ResponseEntity.status(HttpStatus.OK).body(pixService.findAll());
     }
+
 }
