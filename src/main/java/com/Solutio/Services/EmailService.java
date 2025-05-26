@@ -26,7 +26,7 @@ public class EmailService {
             simpleMailMessage.setText(mensagem);
             javaMailSender.send(simpleMailMessage);
             return "Email sent";
-        }
+        }       
         catch(Exception e) {
             return "Failed to send email: " + e.getLocalizedMessage();
         }
