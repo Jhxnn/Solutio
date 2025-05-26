@@ -1,6 +1,7 @@
 package com.Solutio.Models;
 
 
+import com.Solutio.Models.Enums.Role;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,11 +17,30 @@ public class Customer {
     private String name;
     private String email;
     private String cpfCnpj;
+    private String pass;
     private String phone;
     private String address;
     private String externalId;
+    private Role role;
     private LocalDate registrationDate;
     private LocalDate updateDate;
+
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public LocalDate getUpdateDate() {
         return updateDate;
