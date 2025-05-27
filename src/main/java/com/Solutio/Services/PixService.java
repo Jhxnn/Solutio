@@ -42,7 +42,7 @@ public class PixService {
         payload.put("billingType", "PIX");
         payload.put("value", charge.getAmount());
         payload.put("dueDate", charge.getDueDate().toString());
-        payload.put("description", "Pagamento serviço");
+        payload.put("description", charge.getDescription());
         payload.put("externalReference", "CHG_" + UUID.randomUUID());
 
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(payload, headers);

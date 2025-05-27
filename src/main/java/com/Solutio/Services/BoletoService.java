@@ -41,7 +41,7 @@ public class BoletoService {
         payload.put("billingType", "BOLETO");
         payload.put("value", charge.getAmount());
         payload.put("dueDate", charge.getDueDate().toString());
-        payload.put("description", "Pagamento de serviço via boleto");
+        payload.put("description", charge.getDescription());
         payload.put("externalReference", "CHG_" + UUID.randomUUID());
 
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(payload, headers);
