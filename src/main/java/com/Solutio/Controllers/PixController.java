@@ -19,7 +19,6 @@ import java.util.UUID;
 @RequestMapping("/pix")
 public class PixController {
 
-
     @Autowired
     PixService pixService;
 
@@ -27,6 +26,8 @@ public class PixController {
     public ResponseEntity<List<Pix>> findALl(){
         return ResponseEntity.status(HttpStatus.OK).body(pixService.findAll());
     }
+
+
 
     @GetMapping("/qrCode/{pixId}")
     public ResponseEntity<PixTransaction> pixTransaction(@PathVariable(name = "pixId")UUID pixId){

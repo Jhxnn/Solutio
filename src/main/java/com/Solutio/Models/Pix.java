@@ -13,14 +13,14 @@ public class Pix {
     @OneToOne
     @JoinColumn(name = "charge_id")
     private Charge charge;
-
-    private String qrCode;
+//
+//    private String qrCode;
+//    private String qrCodeUrl;
 
     private String externalId;
 
     private String invoiceUrl;
 
-    private String qrCodeUrl;
 
 
     public String getExternalId() {
@@ -54,24 +54,24 @@ public class Pix {
     public void setCharge(Charge charge) {
         this.charge = charge;
     }
-
-    public String getQrCode() {
-        return qrCode;
-    }
-
-    public void setQrCode(String qrCode) {
-        this.qrCode = qrCode;
-    }
-
-
-
-
-    public String getQrCodeUrl() {
-        return qrCodeUrl;
-    }
-
-    public void setQrCodeUrl(String qrCodeUrl) {
-        this.qrCodeUrl = qrCodeUrl;
-    }
+//
+//    public String getQrCode() {
+//        return qrCode;
+//    }
+//
+//    public void setQrCode(String qrCode) {
+//        this.qrCode = qrCode;
+//    }
+//
+//
+//
+//
+//    public String getQrCodeUrl() {
+//        return qrCodeUrl;
+//    }
+//
+//    public void setQrCodeUrl(String qrCodeUrl) {
+//        this.qrCodeUrl = qrCodeUrl;
+//    }
 }
 
