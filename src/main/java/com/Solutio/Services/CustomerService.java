@@ -57,7 +57,7 @@ public class CustomerService {
         payload.put("name", customer.getName());
         payload.put("cpfCnpj", customer.getCpfCnpj());
         payload.put("email", customer.getEmail());
-        payload.put("phone", customer.getPhone());
+        payload.put("mobilePhone", customer.getPhone());
 
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(payload, headers);
 

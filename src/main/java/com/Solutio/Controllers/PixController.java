@@ -28,10 +28,10 @@ public class PixController {
     }
 
 
-
-    @GetMapping("/qrCode/{pixId}")
-    public ResponseEntity<PixTransaction> pixTransaction(@PathVariable(name = "pixId")UUID pixId){
-        return ResponseEntity.status(HttpStatus.OK).body(pixService.getPixTransaction(pixId));
-    }
+//
+//    @GetMapping("/qrCode/{pixId}")
+//    public ResponseEntity<PixTransaction> pixTransaction(@PathVariable(name = "pixId")UUID pixId){
+//        return ResponseEntity.status(HttpStatus.OK).body(pixService.getPixTransaction(pixId));
+//    }
 
 }
