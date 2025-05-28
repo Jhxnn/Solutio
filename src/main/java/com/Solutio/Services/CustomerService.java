@@ -46,6 +46,12 @@ public class CustomerService {
 
     public Customer createCustomer(CustomerDto customerDto) {
         Customer customer = new Customer();
+        if(customerRepository.existsByEmail(customerDto.email())){
+            throw new RuntimeException("The email already exists");
+        }
+        if(customerRepository.existsByCpfCnpj(customerDto.cpfCnpj())){
+            throw new RuntimeException("Cpf or Cnpj already registered");
+        }
         BeanUtils.copyProperties(customerDto,customer);
         customer.setRegistrationDate(LocalDate.now());
         RestTemplate restTemplate = new RestTemplate();
