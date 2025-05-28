@@ -46,6 +46,16 @@ public class CustomerService {
 
     public Customer createCustomer(CustomerDto customerDto) {
         Customer customer = new Customer();
+
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        String cpfCnpjRegex = "^\\d{11}$|^\\d{14}$";
+
+        if (!customerDto.email().matches(emailRegex)) {
+            throw new RuntimeException("Invalid email format");
+        }
+        if (!customerDto.cpfCnpj().matches(cpfCnpjRegex)) {
+            throw new RuntimeException("Invalid CPF or CNPJ format");
+        }
         if(customerRepository.existsByEmail(customerDto.email())){
             throw new RuntimeException("The email already exists");
         }
