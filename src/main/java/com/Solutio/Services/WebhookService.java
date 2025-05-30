@@ -21,8 +21,8 @@ public class WebhookService {
     ChargeService chargeService;
 
     public void processWebhook(WebhookDto payload) {
-        Charge charge = chargeRepository.findByExternalId(payload.paymentData().id());
-        switch (payload.paymentData().status().toUpperCase()) {
+        Charge charge = chargeRepository.findByExternalId(payload.payment().id());
+        switch (payload.payment().status().toUpperCase()) {
             case "RECEIVED" -> chargeService.updateChargeStatus(ChargeStatus.PAID, charge);
             case "REFUNDED","DELETED" -> chargeService.updateChargeStatus(ChargeStatus.CANCELED, charge);
             case "OVERDUE" -> chargeService.updateChargeStatus(ChargeStatus.OVERDUE, charge);

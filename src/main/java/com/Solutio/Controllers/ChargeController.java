@@ -34,6 +34,10 @@ public class ChargeController {
     public ResponseEntity<List<Charge>> findByCustomer(@PathVariable(name = "id")UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(chargeService.findByCustomer(id));
     }
+    @GetMapping
+    public ResponseEntity<List<Charge>> findAll(){
+        return ResponseEntity.status(HttpStatus.OK).body(chargeService.findAll());
+    }
 
 
 
