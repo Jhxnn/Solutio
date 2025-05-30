@@ -20,9 +20,6 @@ public class WebhookController {
     @PostMapping
     public ResponseEntity<Void> receiveWebhook(@RequestBody WebhookDto webhookDto){
         webhookService.processWebhook(webhookDto);
-        System.out.println(webhookDto.event());
-        System.out.println(webhookDto.payment());
-        System.out.println(webhookDto.payment().status());
         return ResponseEntity.noContent().build();
     }
 }

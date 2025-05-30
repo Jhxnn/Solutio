@@ -1,5 +1,6 @@
 package com.Solutio.Models;
 
+import com.Solutio.Dtos.WebhookDto;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ public class Webhook {
     private String event;
 
     @Lob
-    private String payload;
+    private WebhookDto payload;
 
     private LocalDateTime receivedAt;
 
@@ -36,11 +37,11 @@ public class Webhook {
         this.event = event;
     }
 
-    public String getPayload() {
+    public WebhookDto getPayload() {
         return payload;
     }
 
-    public void setPayload(String payload) {
+    public void setPayload(WebhookDto payload) {
         this.payload = payload;
     }
 
