@@ -24,7 +24,7 @@ public class WebhookService {
         Charge charge = chargeRepository.findByExternalId(payload.paymentData().id());
         switch (payload.paymentData().status().toUpperCase()) {
             case "RECEIVED" -> chargeService.updateChargeStatus(ChargeStatus.PAID, charge);
-            case "CANCELED" -> chargeService.updateChargeStatus(ChargeStatus.CANCELED, charge);
+            case "REFUNDED","DELETED" -> chargeService.updateChargeStatus(ChargeStatus.CANCELED, charge);
             case "OVERDUE" -> chargeService.updateChargeStatus(ChargeStatus.OVERDUE, charge);
             default -> System.out.println("Evento não tratado.");
         }
