@@ -9,8 +9,6 @@ import com.Solutio.Models.User;
 import com.Solutio.Repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
-import org.springframework.boot.autoconfigure.pulsar.PulsarProperties;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,7 +29,7 @@ public class UserService {
     EmailService emailService;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    AuthenticationManager authenticationManager;
 
 
     public String login(AuthDto authDto){
@@ -42,8 +40,20 @@ public class UserService {
     }
 
     public String register(RegisterDto registerDto) {
+
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        String passwordRegex = "^(?=.*[A-Z])(?=.*[!@#$%^&*()_+=<>?{}\\[\\]~;:.,-]).{8,}$";
+
+        if (!registerDto.email().matches(emailRegex)) {
+            throw new RuntimeException("Invalid email format");
+        }
+
+        if (!registerDto.password().matches(passwordRegex)) {
+            throw new RuntimeException("Password must be at least 8 characters long, contain one uppercase letter and one special character");
+        }
+
         if (userRepository.findByEmail(registerDto.email()) != null) {
-            throw new RuntimeException("Email is already use");
+            throw new RuntimeException("Email is already in use");
         }
 
         String encryptedPass = new BCryptPasswordEncoder().encode(registerDto.password());
@@ -52,9 +62,14 @@ public class UserService {
         user.setRole(Role.COMMON);
         user.setCreatedAt(LocalDateTime.now());
         user.setPassword(encryptedPass);
-        emailService.sendTextEmail(user.getEmail(), "Account created - SOLUTIO", "Your account has been created. \nWelcome to Solutio");
+        emailService.sendTextEmail(
+                user.getEmail(),
+                "Account Created - SOLUTIO",
+                "Your account has been successfully created.\nWelcome to SOLUTIO!"
+        );
         userRepository.save(user);
         return "Account created";
     }
+
 
 }
