@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class WebhookService {
@@ -27,7 +28,7 @@ public class WebhookService {
         Charge charge = chargeRepository.findByExternalId(payload.payment().id());
         Webhook webhook = new Webhook();
         webhook.setEvent(payload.event());
-        webhook.setPayload(payload);
+        webhook.setPayload(payload.toString());
         webhook.setReceivedAt(LocalDateTime.now());
 
         webhookRepository.save(webhook);
@@ -39,6 +40,10 @@ public class WebhookService {
         }
         webhook.setProcessed(true);
         webhookRepository.save(webhook);
+    }
+
+    public List<Webhook> findAll(){
+        return webhookRepository.findAll();
     }
 
 }

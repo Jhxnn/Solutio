@@ -14,8 +14,7 @@ public class Webhook {
 
     private String event;
 
-    @Lob
-    private WebhookDto payload;
+    private String payload;
 
     private LocalDateTime receivedAt;
 
@@ -37,11 +36,11 @@ public class Webhook {
         this.event = event;
     }
 
-    public WebhookDto getPayload() {
+    public String getPayload() {
         return payload;
     }
 
-    public void setPayload(WebhookDto payload) {
+    public void setPayload(String payload) {
         this.payload = payload;
     }
 
