@@ -4,6 +4,8 @@ package com.Solutio.Services;
 import com.Solutio.Dtos.AuthDto;
 import com.Solutio.Dtos.RegisterDto;
 import com.Solutio.Infra.Security.TokenService;
+import com.Solutio.Models.Charge;
+import com.Solutio.Models.Customer;
 import com.Solutio.Models.Enums.Role;
 import com.Solutio.Models.User;
 import com.Solutio.Repositories.UserRepository;
@@ -11,13 +13,19 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
+
+    @Autowired
+    CustomerService customerService;
 
     @Autowired
     UserRepository userRepository;
@@ -30,6 +38,9 @@ public class UserService {
 
     @Autowired
     AuthenticationManager authenticationManager;
+
+    @Autowired
+    ChargeService chargeService;
 
 
     public String login(AuthDto authDto){
@@ -75,6 +86,31 @@ public class UserService {
         userRepository.save(user);
         return "Account created";
     }
+
+    public List<Charge> findUserCharge() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Customer> customers = customerService.findByUser(user);
+
+        List<Charge> charges = new ArrayList<>();
+        for (Customer customer : customers) {
+            charges.addAll(chargeService.findByCustomer(customer));
+        }
+        return charges;
+    }
+
+
+    public List<Charge> findUserChargeByStatus(String status) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Customer> customers = customerService.findByUser(user);
+
+
+        List<Charge> charges = new ArrayList<>();
+        for (Customer customer : customers) {
+            charges.addAll(chargeService.findByCustomerAndStatus(customer, status.toUpperCase()));
+        }
+        return charges;
+    }
+
 
 
 }

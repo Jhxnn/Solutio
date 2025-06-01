@@ -68,6 +68,10 @@ public class ChargeService {
 
     }
 
+    public List<Charge> findByCustomerAndStatus(Customer customer, String status){
+        return chargeRepository.findByCustomerAndStatus(customer,status);
+    }
+
     public Charge updateCharge(ChargeDto chargeDto, UUID id){
         Charge charge = findById(id);
         if(chargeDto.customer() != null){
@@ -106,8 +110,7 @@ public class ChargeService {
     }
 
 
-    public List<Charge> findByCustomer(UUID id){
-       Customer customer =  customerService.findById(id);
+    public List<Charge> findByCustomer(Customer customer){
        return chargeRepository.findByCustomer(customer);
     }
 
@@ -119,4 +122,5 @@ public class ChargeService {
         Charge charge = findById(id);
         chargeRepository.delete(charge);
     }
+
 }

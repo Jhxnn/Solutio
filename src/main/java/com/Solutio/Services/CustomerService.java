@@ -2,6 +2,7 @@ package com.Solutio.Services;
 
 import com.Solutio.Dtos.CustomerDto;
 import com.Solutio.Models.Customer;
+import com.Solutio.Models.User;
 import com.Solutio.Repositories.CustomerRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.BeanUtils;
@@ -34,6 +35,10 @@ public class CustomerService {
 
     public Customer findByEmail(String email){
         return customerRepository.findByEmail(email);
+    }
+
+    public List<Customer> findByUser(User user){
+        return customerRepository.findByUser(user);
     }
 
     public Customer findByCpfCnpj(String cpfCnpj){
