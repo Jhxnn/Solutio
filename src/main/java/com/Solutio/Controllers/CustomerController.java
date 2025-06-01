@@ -22,9 +22,9 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(customerService.createCustomer(customerDto));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Customer>> findAll(){
-        return ResponseEntity.status(HttpStatus.OK).body(customerService.findAll());
+    @GetMapping("/user")
+    public ResponseEntity<List<Customer>> findByUser(){
+        return ResponseEntity.status(HttpStatus.OK).body(customerService.findByUser());
     }
 
     @GetMapping("/email/{email}")

@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
@@ -33,17 +34,31 @@ public class CustomerService {
         return customerRepository.findById(id).orElseThrow(()-> new RuntimeException("Cannot be found"));
     }
 
-    public Customer findByEmail(String email){
-        return customerRepository.findByEmail(email);
+    public Customer findByEmail(String email) {
+        List<Customer> customers = findByUser();
+        return customers.stream()
+                .filter(customer -> customer.getEmail().equals(email))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Customer not found or does not belong to this user"));
     }
 
     public List<Customer> findByUser(User user){
         return customerRepository.findByUser(user);
     }
 
-    public Customer findByCpfCnpj(String cpfCnpj){
-        return customerRepository.findByCpfCnpj(cpfCnpj);
+    public List<Customer> findByUser(){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return findByUser(user);
     }
+
+    public Customer findByCpfCnpj(String cpfCnpj) {
+        List<Customer> customers = findByUser();
+        return customers.stream()
+                .filter(customer -> customer.getCpfCnpj().equals(cpfCnpj))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Customer not found or does not belong to this user"));
+    }
+
 
     public List<Customer> findAll(){
         return customerRepository.findAll();
