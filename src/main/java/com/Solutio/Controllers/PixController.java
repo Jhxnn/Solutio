@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/pix")
-public class PixController {
+public class    PixController {
 
     @Autowired
     PixService pixService;
