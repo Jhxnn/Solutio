@@ -4,6 +4,7 @@ package com.Solutio.Controllers;
 import com.Solutio.Dtos.ChargeDto;
 import com.Solutio.Models.Charge;
 import com.Solutio.Models.Enums.ChargeStatus;
+import com.Solutio.Models.User;
 import com.Solutio.Services.ChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,15 +31,15 @@ public class ChargeController {
         return ResponseEntity.status(HttpStatus.OK).body(chargeService.findByStatus(status));
     }
 
+    @GetMapping("/charges")
+
+
+
     @GetMapping("/customer/{id}")
     public ResponseEntity<List<Charge>> findByCustomer(@PathVariable(name = "id")UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(chargeService.findByCustomer(id));
     }
-    @GetMapping
-    public ResponseEntity<List<Charge>> findAll(){
-        return ResponseEntity.status(HttpStatus.OK).body(chargeService.findAll());
-    }
-
+    
 
 
 }

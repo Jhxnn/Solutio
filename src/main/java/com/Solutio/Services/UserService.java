@@ -44,6 +44,11 @@ public class UserService {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         String passwordRegex = "^(?=.*[A-Z])(?=.*[!@#$%^&*()_+=<>?{}\\[\\]~;:.,-]).{8,}$";
 
+        if(userRepository.existsByEmail(registerDto.email())){
+            throw new RuntimeException("The email is already exist");
+
+        }
+
         if (!registerDto.email().matches(emailRegex)) {
             throw new RuntimeException("Invalid email format");
         }

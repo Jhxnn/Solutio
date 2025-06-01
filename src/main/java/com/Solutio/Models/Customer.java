@@ -14,6 +14,8 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @JoinColumn(name = "user_id")
+    private User user;
     private String name;
     private String email;
     private String cpfCnpj;
@@ -23,6 +25,13 @@ public class Customer {
     private LocalDate registrationDate;
     private LocalDate updateDate;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public LocalDate getUpdateDate() {
         return updateDate;

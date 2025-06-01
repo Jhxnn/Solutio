@@ -16,6 +16,8 @@ public class Charge {
     private UUID id;
 
     @ManyToOne
+
+
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
