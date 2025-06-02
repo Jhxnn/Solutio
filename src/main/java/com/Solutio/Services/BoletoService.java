@@ -63,6 +63,10 @@ public class BoletoService {
         return boletoRepository.save(boleto);
     }
 
+    public Boleto findByCharge(Charge charge){
+        return boletoRepository.findByCharge(charge);
+    }
+
     public List<Boleto> findAll(){
         return boletoRepository.findAll();
     }

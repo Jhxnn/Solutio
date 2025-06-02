@@ -29,7 +29,6 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/webhook").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/customer/all").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/user/all").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/webhook").hasRole("ADMIN")

@@ -30,18 +30,13 @@ public class ChargeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(chargeService.createCharge(chargeDto));
     }
 
-    @GetMapping("/status/{status}")
-    public ResponseEntity<List<Charge>> findByStatus(@PathVariable(name = "status") ChargeStatus status){
-        return ResponseEntity.status(HttpStatus.OK).body(chargeService.findByStatus(status));
-    }
-
     @GetMapping("/user")
     public ResponseEntity<List<Charge>> findUserCharges(){
         return ResponseEntity.status(HttpStatus.OK).body(userService.findUserCharge());
     }
 
     @GetMapping("/user/status/{status}")
-    public ResponseEntity<List<Charge>> findByStatus(@PathVariable(name = "status")String status){
+    public ResponseEntity<List<Charge>> findByStatus(@PathVariable(name = "status")ChargeStatus status){
         return ResponseEntity.status(HttpStatus.OK).body(userService.findUserChargeByStatus(status));
     }
 

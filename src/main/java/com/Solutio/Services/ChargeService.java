@@ -68,9 +68,11 @@ public class ChargeService {
 
     }
 
-    public List<Charge> findByCustomerAndStatus(Customer customer, String status){
+    public List<Charge> findByCustomerAndStatus(Customer customer, ChargeStatus status){
         return chargeRepository.findByCustomerAndStatus(customer,status);
     }
+
+
 
     public Charge updateCharge(ChargeDto chargeDto, UUID id){
         Charge charge = findById(id);

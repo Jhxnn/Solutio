@@ -99,6 +99,10 @@ public class PixService {
         return pixRepository.findById(id).orElseThrow(()-> new RuntimeException("Cannot be found"));
     }
 
+    public Pix findByCharge(Charge charge){
+        return pixRepository.findByCharge(charge);
+    }
+
 
     public List<Pix> findAll(){
         return pixRepository.findAll();

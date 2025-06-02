@@ -4,6 +4,7 @@ package com.Solutio.Controllers;
 import com.Solutio.Dtos.PixTransaction;
 import com.Solutio.Models.Pix;
 import com.Solutio.Services.PixService;
+import com.Solutio.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +23,17 @@ public class    PixController {
     @Autowired
     PixService pixService;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping
     public ResponseEntity<List<Pix>> findALl(){
         return ResponseEntity.status(HttpStatus.OK).body(pixService.findAll());
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<List<Pix>> findUserPix(){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findPixCharges());
     }
 
 

@@ -4,10 +4,10 @@ package com.Solutio.Services;
 import com.Solutio.Dtos.AuthDto;
 import com.Solutio.Dtos.RegisterDto;
 import com.Solutio.Infra.Security.TokenService;
-import com.Solutio.Models.Charge;
-import com.Solutio.Models.Customer;
+import com.Solutio.Models.*;
+import com.Solutio.Models.Enums.ChargeStatus;
 import com.Solutio.Models.Enums.Role;
-import com.Solutio.Models.User;
+import com.Solutio.Repositories.BoletoRepository;
 import com.Solutio.Repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,9 @@ import java.util.List;
 
 @Service
 public class UserService {
+
+    @Autowired
+    PixService pixService;
 
     @Autowired
     CustomerService customerService;
@@ -42,6 +45,8 @@ public class UserService {
     @Autowired
     ChargeService chargeService;
 
+    @Autowired
+    BoletoService boletoService;
 
     public String login(AuthDto authDto){
         UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(authDto.email(), authDto.password());
@@ -99,16 +104,56 @@ public class UserService {
     }
 
 
-    public List<Charge> findUserChargeByStatus(String status) {
+    public List<Charge> findUserChargeByStatus(ChargeStatus status) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Customer> customers = customerService.findByUser(user);
 
 
         List<Charge> charges = new ArrayList<>();
         for (Customer customer : customers) {
-            charges.addAll(chargeService.findByCustomerAndStatus(customer, status.toUpperCase()));
+            charges.addAll(chargeService.findByCustomerAndStatus(customer, status));
         }
         return charges;
+    }
+
+    public List<Pix> findPixCharges() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Customer> customers = customerService.findByUser(user);
+
+        List<Charge> charges = new ArrayList<>();
+        for (Customer customer : customers) {
+            charges.addAll(chargeService.findByCustomer(customer));
+        }
+
+        List<Pix> pixList = new ArrayList<>();
+        for (Charge charge : charges) {
+            Pix pix = pixService.findByCharge(charge);
+            if (pix != null) {
+                pixList.add(pix);
+            }
+        }
+
+        return pixList;
+    }
+
+
+    public List<Boleto> findBoletoCharges(){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Customer> customers = customerService.findByUser(user);
+
+        List<Charge> charges = new ArrayList<>();
+        for (Customer customer : customers) {
+            charges.addAll(chargeService.findByCustomer(customer));
+        }
+        List<Boleto> boletos = new ArrayList<>();
+        for(Charge charge : charges){
+            Boleto boleto = boletoService.findByCharge(charge);
+            if(boleto != null){
+                boletos.add(boleto);
+            }
+        }
+        return boletos;
+
     }
 
 
