@@ -59,10 +59,15 @@ public class UserService {
 
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         String passwordRegex = "^(?=.*[A-Z])(?=.*[!@#$%^&*()_+=<>?{}\\[\\]~;:.,-]).{8,}$";
+        String cpfCnpjRegex = "^\\d{11}$|^\\d{14}$";
 
         if(userRepository.existsByEmail(registerDto.email())){
             throw new RuntimeException("The email is already exist");
 
+        }
+
+        if (!registerDto.cpfCnpj().matches(cpfCnpjRegex)) {
+            throw new RuntimeException("Invalid CPF or CNPJ format");
         }
 
         if (!registerDto.email().matches(emailRegex)) {

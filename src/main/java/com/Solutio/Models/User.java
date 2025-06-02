@@ -21,14 +21,14 @@ public class User implements UserDetails {
     private UUID userId;
 
     private String name;
+    private String cpfCnpj;
+    private String address;
 
     private String email;
 
     private String password;
 
-    private String cpfCnpj;
 
-    private String address;
 
     private Role role;
 
@@ -36,6 +36,22 @@ public class User implements UserDetails {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public String getCpfCnpj() {
+        return cpfCnpj;
+    }
+
+    public void setCpfCnpj(String cpfCnpj) {
+        this.cpfCnpj = cpfCnpj;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
