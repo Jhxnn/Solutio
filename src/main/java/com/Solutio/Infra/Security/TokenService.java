@@ -40,7 +40,7 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("traggio")
+                    .withIssuer("solutio")
                     .build()
                     .verify(token)
                     .getSubject();
