@@ -3,6 +3,7 @@ package com.Solutio.Services;
 import com.Solutio.Models.Boleto;
 import com.Solutio.Models.Charge;
 import com.Solutio.Models.Customer;
+import com.Solutio.Models.User;
 import com.Solutio.Repositories.BoletoRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +12,23 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class BoletoService {
 
     @Autowired
     BoletoRepository boletoRepository;
+
+    @Autowired
+    CustomerService customerService;
+
+    @Autowired
+    ChargeService chargeService;
 
     @Value("${asaas.api.token}")
     private String asaasApikey;
@@ -65,6 +70,24 @@ public class BoletoService {
 
     public Boleto findByCharge(Charge charge){
         return boletoRepository.findByCharge(charge);
+    }
+    public List<Boleto> findBoletoCharges(){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Customer> customers = customerService.findByUser(user);
+
+        List<Charge> charges = new ArrayList<>();
+        for (Customer customer : customers) {
+            charges.addAll(chargeService.findByCustomer(customer));
+        }
+        List<Boleto> boletos = new ArrayList<>();
+        for(Charge charge : charges){
+            Boleto boleto = findByCharge(charge);
+            if(boleto != null){
+                boletos.add(boleto);
+            }
+        }
+        return boletos;
+
     }
 
     public List<Boleto> findAll(){

@@ -22,8 +22,6 @@ public class ChargeController {
     @Autowired
     ChargeService chargeService;
 
-    @Autowired
-    UserService userService;
 
     @PostMapping
     public ResponseEntity<Charge> createCharge(@RequestBody ChargeDto chargeDto){
@@ -32,12 +30,12 @@ public class ChargeController {
 
     @GetMapping("/user")
     public ResponseEntity<List<Charge>> findUserCharges(){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.findUserCharge());
+        return ResponseEntity.status(HttpStatus.OK).body(chargeService.findUserCharge());
     }
 
     @GetMapping("/user/status/{status}")
     public ResponseEntity<List<Charge>> findByStatus(@PathVariable(name = "status")ChargeStatus status){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.findUserChargeByStatus(status));
+        return ResponseEntity.status(HttpStatus.OK).body(chargeService.findUserChargeByStatus(status));
     }
 
 

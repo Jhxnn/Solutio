@@ -92,69 +92,14 @@ public class UserService {
         return "Account created";
     }
 
-    public List<Charge> findUserCharge() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Customer> customers = customerService.findByUser(user);
-
-        List<Charge> charges = new ArrayList<>();
-        for (Customer customer : customers) {
-            charges.addAll(chargeService.findByCustomer(customer));
-        }
-        return charges;
-    }
 
 
-    public List<Charge> findUserChargeByStatus(ChargeStatus status) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Customer> customers = customerService.findByUser(user);
 
 
-        List<Charge> charges = new ArrayList<>();
-        for (Customer customer : customers) {
-            charges.addAll(chargeService.findByCustomerAndStatus(customer, status));
-        }
-        return charges;
-    }
-
-    public List<Pix> findPixCharges() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Customer> customers = customerService.findByUser(user);
-
-        List<Charge> charges = new ArrayList<>();
-        for (Customer customer : customers) {
-            charges.addAll(chargeService.findByCustomer(customer));
-        }
-
-        List<Pix> pixList = new ArrayList<>();
-        for (Charge charge : charges) {
-            Pix pix = pixService.findByCharge(charge);
-            if (pix != null) {
-                pixList.add(pix);
-            }
-        }
-
-        return pixList;
-    }
 
 
-    public List<Boleto> findBoletoCharges(){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Customer> customers = customerService.findByUser(user);
 
-        List<Charge> charges = new ArrayList<>();
-        for (Customer customer : customers) {
-            charges.addAll(chargeService.findByCustomer(customer));
-        }
-        List<Boleto> boletos = new ArrayList<>();
-        for(Charge charge : charges){
-            Boleto boleto = boletoService.findByCharge(charge);
-            if(boleto != null){
-                boletos.add(boleto);
-            }
-        }
-        return boletos;
 
-    }
 
 
 

@@ -18,13 +18,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/pix")
-public class    PixController {
+public class PixController {
 
     @Autowired
     PixService pixService;
-
-    @Autowired
-    UserService userService;
 
     @GetMapping("/all")
     public ResponseEntity<List<Pix>> findALl(){
@@ -33,7 +30,7 @@ public class    PixController {
 
     @GetMapping("/user")
     public ResponseEntity<List<Pix>> findUserPix(){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.findPixCharges());
+        return ResponseEntity.status(HttpStatus.OK).body(pixService.findPixCharges());
     }
 
 

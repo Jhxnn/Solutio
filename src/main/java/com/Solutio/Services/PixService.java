@@ -5,18 +5,17 @@ import com.Solutio.Dtos.PixTransaction;
 import com.Solutio.Models.Charge;
 import com.Solutio.Models.Customer;
 import com.Solutio.Models.Pix;
+import com.Solutio.Models.User;
 import com.Solutio.Repositories.PixRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class PixService {
@@ -24,6 +23,12 @@ public class PixService {
 
     @Autowired
     PixRepository pixRepository;
+
+    @Autowired
+    ChargeService chargeService;
+
+    @Autowired
+    CustomerService customerService;
 
     @Value("${asaas.api.token}")
     private String asaasApikey;
@@ -101,6 +106,25 @@ public class PixService {
 
     public Pix findByCharge(Charge charge){
         return pixRepository.findByCharge(charge);
+    }
+    public List<Pix> findPixCharges() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Customer> customers = customerService.findByUser(user);
+
+        List<Charge> charges = new ArrayList<>();
+        for (Customer customer : customers) {
+            charges.addAll(chargeService.findByCustomer(customer));
+        }
+
+        List<Pix> pixList = new ArrayList<>();
+        for (Charge charge : charges) {
+            Pix pix = findByCharge(charge);
+            if (pix != null) {
+                pixList.add(pix);
+            }
+        }
+
+        return pixList;
     }
 
 

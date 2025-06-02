@@ -20,8 +20,6 @@ public class BoletoController {
     @Autowired
     BoletoService boletoService;
 
-    @Autowired
-    UserService userService;
 
     @GetMapping("/all")
     public ResponseEntity<List<Boleto>> findAll(){
@@ -30,6 +28,6 @@ public class BoletoController {
 
     @GetMapping("/user")
     public ResponseEntity<List<Boleto>> findUserBoleto(){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.findBoletoCharges());
+        return ResponseEntity.status(HttpStatus.OK).body(boletoService.findBoletoCharges());
     }
 }

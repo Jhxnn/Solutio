@@ -1,21 +1,20 @@
 package com.Solutio.Services;
 
 import com.Solutio.Dtos.ChargeDto;
-import com.Solutio.Models.Boleto;
-import com.Solutio.Models.Charge;
-import com.Solutio.Models.Customer;
+import com.Solutio.Models.*;
 import com.Solutio.Models.Enums.ChargeStatus;
 import com.Solutio.Models.Enums.ChargeType;
-import com.Solutio.Models.Pix;
 import com.Solutio.Repositories.ChargeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -123,6 +122,30 @@ public class ChargeService {
     public void deleteCharge(UUID id){
         Charge charge = findById(id);
         chargeRepository.delete(charge);
+    }
+
+
+    public List<Charge> findUserChargeByStatus(ChargeStatus status) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Customer> customers = customerService.findByUser(user);
+
+
+        List<Charge> charges = new ArrayList<>();
+        for (Customer customer : customers) {
+            charges.addAll(findByCustomerAndStatus(customer, status));
+        }
+        return charges;
+    }
+
+    public List<Charge> findUserCharge() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Customer> customers = customerService.findByUser(user);
+
+        List<Charge> charges = new ArrayList<>();
+        for (Customer customer : customers) {
+            charges.addAll(findByCustomer(customer));
+        }
+        return charges;
     }
 
 }
