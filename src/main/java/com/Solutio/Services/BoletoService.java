@@ -5,6 +5,7 @@ import com.Solutio.Models.Charge;
 import com.Solutio.Models.Customer;
 import com.Solutio.Models.User;
 import com.Solutio.Repositories.BoletoRepository;
+import com.Solutio.Repositories.ChargeRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,7 +29,7 @@ public class BoletoService {
     CustomerService customerService;
 
     @Autowired
-    ChargeService chargeService;
+    ChargeRepository chargeRepository;
 
     @Value("${asaas.api.token}")
     private String asaasApikey;
@@ -77,7 +78,7 @@ public class BoletoService {
 
         List<Charge> charges = new ArrayList<>();
         for (Customer customer : customers) {
-            charges.addAll(chargeService.findByCustomer(customer));
+            charges.addAll(chargeRepository.findByCustomer(customer));
         }
         List<Boleto> boletos = new ArrayList<>();
         for(Charge charge : charges){

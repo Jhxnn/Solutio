@@ -6,6 +6,7 @@ import com.Solutio.Models.Charge;
 import com.Solutio.Models.Customer;
 import com.Solutio.Models.Pix;
 import com.Solutio.Models.User;
+import com.Solutio.Repositories.ChargeRepository;
 import com.Solutio.Repositories.PixRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class PixService {
     PixRepository pixRepository;
 
     @Autowired
-    ChargeService chargeService;
+    ChargeRepository chargeRepository;
 
     @Autowired
     CustomerService customerService;
@@ -113,7 +114,7 @@ public class PixService {
 
         List<Charge> charges = new ArrayList<>();
         for (Customer customer : customers) {
-            charges.addAll(chargeService.findByCustomer(customer));
+            charges.addAll(chargeRepository.findByCustomer(customer));
         }
 
         List<Pix> pixList = new ArrayList<>();

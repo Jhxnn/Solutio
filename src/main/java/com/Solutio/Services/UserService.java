@@ -40,7 +40,7 @@ public class UserService {
     EmailService emailService;
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
     ChargeService chargeService;

@@ -26,6 +26,10 @@ public class User implements UserDetails {
 
     private String password;
 
+    private String cpfCnpj;
+
+    private String address;
+
     private Role role;
 
     private LocalDateTime createdAt;

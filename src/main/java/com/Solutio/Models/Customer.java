@@ -3,6 +3,8 @@ package com.Solutio.Models;
 
 import com.Solutio.Models.Enums.Role;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.Reference;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +16,8 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @JoinColumn(name = "user_id")
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id",name = "user_id")
     private User user;
     private String name;
     private String email;
