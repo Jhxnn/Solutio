@@ -23,7 +23,7 @@ public class BoletoController {
     @Autowired
     UserService userService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Boleto>> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(boletoService.findAll());
     }

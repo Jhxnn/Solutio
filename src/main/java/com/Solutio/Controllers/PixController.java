@@ -26,7 +26,7 @@ public class    PixController {
     @Autowired
     UserService userService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Pix>> findALl(){
         return ResponseEntity.status(HttpStatus.OK).body(pixService.findAll());
     }
