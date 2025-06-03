@@ -66,7 +66,8 @@ public class CustomerService {
 
     public Customer createCustomer(CustomerDto customerDto) {
         Customer customer = new Customer();
-
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        customer.setUser(user);
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         String cpfCnpjRegex = "^\\d{11}$|^\\d{14}$";
 

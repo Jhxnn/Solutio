@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/customer")
@@ -40,6 +41,11 @@ public class CustomerController {
     @GetMapping("/cpfCnpj/{cpfCnpj}")
     public ResponseEntity<Customer> findByCpfCnpj(@PathVariable(name = "cpfCnpj")String cpfCnpj){
         return ResponseEntity.status(HttpStatus.OK).body(customerService.findByCpfCnpj(cpfCnpj));
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Customer> deleteCustomer(@PathVariable(name = "id")UUID id){
+        customerService.deleteCustomer(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
