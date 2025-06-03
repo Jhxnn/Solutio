@@ -132,4 +132,9 @@ public class PixService {
     public List<Pix> findAll(){
         return pixRepository.findAll();
     }
+
+    public void deletePix(UUID id){
+        Pix pix = findById(id);
+        pixRepository.delete(pix);
+    }
 }

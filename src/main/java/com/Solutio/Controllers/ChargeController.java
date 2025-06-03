@@ -3,6 +3,7 @@ package com.Solutio.Controllers;
 
 import com.Solutio.Dtos.ChargeDto;
 import com.Solutio.Models.Charge;
+import com.Solutio.Models.Customer;
 import com.Solutio.Models.Enums.ChargeStatus;
 import com.Solutio.Models.User;
 import com.Solutio.Services.ChargeService;
@@ -36,6 +37,12 @@ public class ChargeController {
     @GetMapping("/user/status/{status}")
     public ResponseEntity<List<Charge>> findByStatus(@PathVariable(name = "status")ChargeStatus status){
         return ResponseEntity.status(HttpStatus.OK).body(chargeService.findUserChargeByStatus(status));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Charge> deleteCharge(@PathVariable(name = "id")UUID id){
+        chargeService.deleteCharge(id);
+        return ResponseEntity.noContent().build();
     }
 
 

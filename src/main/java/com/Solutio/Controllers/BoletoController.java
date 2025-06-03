@@ -7,11 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/boleto")
@@ -29,5 +28,10 @@ public class BoletoController {
     @GetMapping("/user")
     public ResponseEntity<List<Boleto>> findUserBoleto(){
         return ResponseEntity.status(HttpStatus.OK).body(boletoService.findBoletoCharges());
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boleto> deleteBoleto(@PathVariable(name = "id") UUID id){
+        boletoService.deleteBoleto(id);
+        return ResponseEntity.noContent().build();
     }
 }

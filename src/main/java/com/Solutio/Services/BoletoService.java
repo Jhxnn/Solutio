@@ -90,6 +90,14 @@ public class BoletoService {
         return boletos;
 
     }
+    public Boleto findById(UUID id){
+        return boletoRepository.findById(id).orElseThrow(()-> new RuntimeException("Cannot be found"));
+    }
+
+    public void deleteBoleto(UUID id){
+        Boleto boleto = findById(id);
+        boletoRepository.delete(boleto);
+    }
 
     public List<Boleto> findAll(){
         return boletoRepository.findAll();
