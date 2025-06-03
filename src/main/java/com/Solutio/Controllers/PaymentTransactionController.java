@@ -24,4 +24,10 @@ public class PaymentTransactionController {
     public ResponseEntity<List<PaymentTransaction>> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(paymentTransactionService.findAll());
     }
+
+    @Operation(description = "Lista todas as transações de pagamento do usuario logado")
+    @GetMapping("/user")
+    public ResponseEntity<List<PaymentTransaction>> findUserPayments(){
+        return ResponseEntity.status(HttpStatus.OK).body(paymentTransactionService.findPaymentCharges());
+    }
 }
