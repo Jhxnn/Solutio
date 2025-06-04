@@ -64,7 +64,7 @@ public class PixService {
         pix.setCharge(charge);
         pix.setExternalId(body.has("id") ? body.get("id").asText() : null);
         pix.setInvoiceUrl(body.has("invoiceUrl") ? body.get("invoiceUrl").asText() : null);
-        System.out.println(body);
+
         return pixRepository.save(pix);
     }
 
@@ -98,7 +98,7 @@ public class PixService {
 //            return new PixTransaction(qrCode, qrCodeUrl);
 //        } else {
 //            throw new RuntimeException("QRCode ainda não gerado para esse pagamento.");
-//        }
+//        }S
 //    }
 
     public Pix findById(UUID id){
